@@ -32,9 +32,19 @@ const teamCard = await getCollection("team");
     <p>Check these superheroes</p>
   </header>
   <ul>
-    <li>Alexander</li>
-    <li>Ian</li>
-    <li>Runar</li>
+    {
+      teamCard.map((member) => (
+        <li>
+          <TeamCard
+            Id={member.id}
+            Name={member.data.name}
+            Function={member.data.function}
+            Bio={member.data.bio}
+            Pic={member.data.pic.src}
+          />
+        </li>
+      ))
+    }
   </ul>
 </section>
 

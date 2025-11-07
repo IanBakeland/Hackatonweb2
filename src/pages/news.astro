@@ -1,5 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const newsItems = await getCollection("news");
+newsItems.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 ---
 
 <Base title="News">
@@ -7,17 +13,21 @@ import Base from "../layouts/Base.astro";
     <h2><span>News</span></h2>
     <p class="code">The third digit of the code is 3</p>
     <ul>
-      <li>
-        <article>
-          <h3>##TITLE##</h3>
-          <time datetime={##DATE##}>
-            {##DATE##}
-          </time>
-          <div class="md">
-            ##CONTENT##
-          </div>
-        </article>
-      </li>
+      {
+        newsItems.map((item) => (
+          <li>
+            <article>
+              <h3>{item.data.title}</h3>
+              <time datetime={item.data.date}>
+                {new Date(item.data.date).toDateString()}
+              </time>
+              <div class="md">
+                <Content content={item} />
+              </div>
+            </article>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </Base>

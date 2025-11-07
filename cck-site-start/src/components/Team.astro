@@ -1,5 +1,7 @@
 ---
-
+import { getCollection } from "astro:content";
+import TeamCard from "../components/TeamCard.astro";
+const teamCard = await getCollection("team");
 ---
 
 <svg

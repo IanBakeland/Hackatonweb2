@@ -35,12 +35,7 @@ const newsCollection = defineCollection({
   schema: () =>
     z.object({
       title: z.string(),
-      date: z.union([z.string(), z.date()]).transform((val) => {
-        if (val instanceof Date) {
-          return val.toISOString().split('T')[0];
-        }
-        return val;
-      }),
+      date: z.string(),
     }),
 });
 

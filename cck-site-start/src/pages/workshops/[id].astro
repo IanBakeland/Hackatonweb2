@@ -1,0 +1,108 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+    const workshops = await getCollection("workshops");
+    return workshops.map((workshop) => ({
+        params: { id: workshop.id },
+        props: { workshop },
+    }));
+}
+
+const { workshop } = Astro.props;
+const { Content } = await render(workshop);
+---
+
+<Base title={workshop.data.title}>
+    <article class="container workshop-detail">
+        <header>
+            <h1><span>{workshop.data.title}</span></h1>
+        </header>
+
+        <div class="workshop-content">
+            <div class="workshop-image">
+                <img src={workshop.data.image.src} alt={workshop.data.title} />
+            </div>
+
+            <div class="workshop-body">
+                <Content />
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="/#workshops">← Back to workshops</a>
+        </div>
+    </article>
+</Base>
+
+<style>
+    .workshop-detail {
+        max-width: var(--max-width-text);
+        margin: 0 auto;
+    }
+
+    header {
+        margin-bottom: var(--sp-xl);
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: var(--sp-m);
+    }
+
+    .workshop-content {
+        display: grid;
+        gap: var(--sp-xl);
+        margin-bottom: var(--sp-xl);
+    }
+
+    .workshop-image {
+        width: 100%;
+    }
+
+    .workshop-image img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--br-l);
+        border: solid 2px var(--color-text);
+        border-bottom-width: 8px;
+    }
+
+    .workshop-body {
+        line-height: 1.6;
+    }
+
+    .workshop-body :global(p) {
+        margin-bottom: var(--sp-m);
+    }
+
+    .back-link {
+        text-align: center;
+        margin-top: var(--sp-xl);
+        padding-top: var(--sp-xl);
+        border-top: solid 1px var(--color-text);
+    }
+
+    .back-link a {
+        color: var(--color-text);
+        text-decoration: none;
+        padding: var(--sp-s) var(--sp-m);
+        border: solid 2px var(--color-text);
+        border-radius: var(--br-m);
+        display: inline-block;
+        transition: all 0.2s ease;
+    }
+
+    .back-link a:hover {
+        background-color: var(--color-primary);
+        transform: translateY(-2px);
+    }
+
+    @media (min-width: 768px) {
+        .workshop-content {
+            grid-template-columns: 1fr 2fr;
+            align-items: start;
+        }
+    }
+</style>

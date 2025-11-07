@@ -30,8 +30,22 @@ const foundationsCollection = defineCollection({
     }),
 });
 
+const newsCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/news" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      date: z.string().refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      }),
+      image: image(),
+      summary: z.string(),
+    }),
+});
+
 export const collections = {
   team: teamCollection,
   foundations: foundationsCollection,
   workshops: workshopsCollection,
+  news: newsCollection,
 };

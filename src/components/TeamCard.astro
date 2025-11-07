@@ -1,12 +1,6 @@
 ---
-const {
-  Pic = "",
-  Name = "",
-  Bio = "",
-  Id = "",
-  Function = "",
-
-} = Astro.props
+const { Pic = "", Name = "", Bio = "", Id = "", Function = "" } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <article>
@@ -21,7 +15,7 @@ const {
       />
     </div>
   </div>
-  <p class="name"><a href={`/team/${Id}`}>{Name}</a></p>
+  <p class="name"><a href={`${base}team/${Id}`}>{Name}</a></p>
   <p class="function">{Function}</p>
   <p class="bio">{Bio}</p>
 </article>

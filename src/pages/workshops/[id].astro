@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { workshop } = Astro.props;
 const { Content } = await render(workshop);
+const base = import.meta.env.BASE_URL;
 ---
 
 <Base title={workshop.data.title}>
@@ -31,7 +32,7 @@ const { Content } = await render(workshop);
         </div>
 
         <div class="back-link">
-            <a href="/#workshops">← Back to workshops</a>
+            <a href={`${base}#workshops`}>← Back to workshops</a>
         </div>
     </article>
 </Base>

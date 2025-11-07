@@ -4,12 +4,15 @@ const {
   description = "No description",
   slug = "test3",
 } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <details>
   <summary>{title}</summary>
   <p>{description}</p>
-  <a href={`/foundations/${slug}`}> Find out how we put this in practice </a>
+  <a href={`${base}foundations/${slug}`}>
+    Find out how we put this in practice
+  </a>
 </details>
 
 <style>
